@@ -4,7 +4,7 @@ import Tab from "./_components/Tab";
 import TabProvider from "./_components/TabProvider";
 import * as styles from "./home.css";
 
-export default function Page() {
+export default function Home() {
   return (
     <main className={styles.main}>
       <TabProvider>
