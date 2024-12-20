@@ -17,7 +17,11 @@ export default function Page() {
     <div className={styles.container}>
       <CloseButton />
       <div className={styles.imageZone}>
-        <img src={photo.link} alt={photo.Post?.content} />
+        <img
+          src={photo.link}
+          alt={photo.Post?.content}
+          className={styles.hiddenImage}
+        />
         <div
           className={styles.image}
           style={{ backgroundImage: `url(${photo.link})` }}

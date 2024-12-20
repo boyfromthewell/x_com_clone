@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const logOutButton = style({
-  width: 258,
+  width: 66,
   height: 66,
   padding: 12,
   display: "flex",
@@ -16,6 +16,12 @@ export const logOutButton = style({
     backgroundColor: "rgba(15,20,25, 0.1)",
     borderRadius: 33,
   },
+
+  "@media": {
+    "all and (min-width: 1300px)": {
+      width: 258,
+    },
+  },
 });
 
 export const logOutUserImage = style({
@@ -27,6 +33,20 @@ export const buttonImg = style({
   borderRadius: "50%",
 });
 
+export const userNameBold = style({
+  "@media": {
+    "all and (min-width: 1300px)": {
+      fontWeight: "bold",
+    },
+  },
+});
+
 export const logOutUserName = style({
-  margin: "0 12px",
+  display: "none",
+  "@media": {
+    "all and (min-width: 1300px)": {
+      margin: "0 12px",
+      display: "inline-block",
+    },
+  },
 });

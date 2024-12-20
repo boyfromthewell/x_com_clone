@@ -6,6 +6,12 @@ export const container = style({
   backgroundColor: "#fff",
   width: "100dvw",
   height: "100dvh",
+  "@media": {
+    "all and (min-width: 1000px)": {
+      flexDirection: "row",
+      padding: 0,
+    },
+  },
 });
 
 export const left = style({
@@ -13,6 +19,12 @@ export const left = style({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  "@media": {
+    "all and (min-width: 1000px)": {
+      flex: 1,
+      justifyContent: "center",
+    },
+  },
 });
 
 export const right = style({
@@ -20,6 +32,11 @@ export const right = style({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
+  "@media": {
+    "all and (min-width: 1000px)": {
+      justifyContent: "center",
+    },
+  },
 });
 
 const hTagBase = style({
@@ -31,6 +48,11 @@ export const rightH1 = style([
   {
     fontSize: 64,
     margin: "48px 0",
+    "@media": {
+      "all and (min-width: 1000px)": {
+        fontSize: 64,
+      },
+    },
   },
 ]);
 

@@ -14,16 +14,28 @@ export const leftSectionWrapper = style({
 });
 
 export const leftSection = style({
-  width: 275,
+  width: 72,
   height: "100dvh",
+  "@media": {
+    "all and (min-width: 1300px)": {
+      width: 275,
+    },
+  },
 });
 
 export const leftSectionFixed = style({
   position: "fixed",
   width: "inherit",
   height: "100dvh",
+  padding: "0 8px",
   display: "flex",
   flexDirection: "column",
+  alignItems: "center",
+  "@media": {
+    "all and (min-width: 1300px)": {
+      alignItems: "flex-start",
+    },
+  },
 });
 
 export const leftSectionNav = style({
@@ -58,18 +70,46 @@ export const postButton = style({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  height: 52,
+  height: 50,
   boxShadow: "rgba(0, 0, 0, 0.08) 0px 8px 28px",
   backgroundColor: "rgb(29, 155, 240)",
-  width: 234,
+  width: 50,
   border: "none",
   color: "rgb(255, 255, 255)",
   fontWeight: 700,
   fontSize: 17,
-  borderRadius: 26,
+  borderRadius: "50%",
 
   ":hover": {
     backgroundColor: "rgb(26, 140, 216)",
+  },
+
+  "@media": {
+    "all and (min-width: 1300px)": {
+      width: 234,
+      height: 52,
+      borderRadius: 26,
+    },
+  },
+});
+
+export const postButtonSpan = style({
+  display: "none",
+  "@media": {
+    "all and (min-width: 1300px)": {
+      display: "inline-block",
+    },
+  },
+});
+
+export const postButtonSvg = style({
+  display: "inline-block",
+  fill: "white",
+  width: 24,
+  "@media": {
+    "all and (min-width: 1300px)": {
+      display: "none",
+    },
   },
 });
 
@@ -83,9 +123,14 @@ export const rightSectionWrapper = style({
 
 export const rightSectionInner = style({
   height: "100%",
-  width: 990,
+  width: 600,
   display: "flex",
   justifyContent: "space-between",
+  "@media": {
+    "all and (min-width: 1024px)": {
+      width: 990,
+    },
+  },
 });
 
 export const main = style({
@@ -94,8 +139,14 @@ export const main = style({
 });
 
 export const rightSection = style({
-  width: 350,
-  height: "100%",
+  display: "none",
+  "@media": {
+    "all and (min-width: 1024px)": {
+      width: 350,
+      height: "100%",
+      display: "inline-block",
+    },
+  },
 });
 
 export const search = style({

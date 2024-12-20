@@ -23,7 +23,7 @@ export default function LogoutButton() {
         />
       </div>
       <div className={styles.logOutUserName}>
-        <div style={{ fontWeight: "bold" }}>{me.nickname}</div>
+        <div className={styles.userNameBold}>{me.nickname}</div>
         <div>@{me.id}</div>
       </div>
     </button>

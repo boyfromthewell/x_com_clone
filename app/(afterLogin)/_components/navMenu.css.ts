@@ -13,7 +13,13 @@ export const navFill = style({
 });
 
 export const navFillDiv = style({
-  marginLeft: 20,
-  marginRight: 16,
-  fontSize: 20,
+  display: "none",
+  "@media": {
+    "all and (min-width: 1300px)": {
+      marginLeft: 20,
+      marginRight: 16,
+      fontSize: 20,
+      display: "inline-block",
+    },
+  },
 });

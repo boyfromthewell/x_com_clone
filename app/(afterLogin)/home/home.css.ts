@@ -10,4 +10,10 @@ export const main = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "stretch",
+
+  "@media": {
+    "all and (min-width: 687px)": {
+      width: 600,
+    },
+  },
 });

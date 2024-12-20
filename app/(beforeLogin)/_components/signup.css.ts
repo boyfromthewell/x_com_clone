@@ -23,12 +23,27 @@ export const modal = style({
   display: "flex",
   flexDirection: "column",
   height: 550,
+  "@media": {
+    "all and (min-width: 687px)": {
+      top: "5%",
+      minWidth: 600,
+      maxWidth: 600,
+      height: 550,
+      padding: 0,
+    },
+  },
 });
 
 export const modalHeader = style({
   padding: "36px 80px 20px",
   fontSize: 31,
   fontWeight: "bold",
+
+  "@media": {
+    "all and (min-width: 687px)": {
+      padding: "36px 80px 20px",
+    },
+  },
 });
 
 export const modalForm = style({
@@ -40,6 +55,11 @@ export const modalForm = style({
 export const modalBody = style({
   flex: 1,
   padding: "0 80px",
+  "@media": {
+    "all and (min-width: 687px)": {
+      padding: "0 80px",
+    },
+  },
 });
 
 export const inputDiv = style({
