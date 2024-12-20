@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "@tanstack/react-query": "^5.62.7",
     "@vanilla-extract/css": "^1.16.1",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
@@ -17,6 +19,8 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.62.1",
+    "@tanstack/react-query-devtools": "^5.62.7",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

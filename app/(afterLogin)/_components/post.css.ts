@@ -86,7 +86,12 @@ export const postUserText = style({
   },
 });
 
-export const postImageSection = style({});
+export const postImageSection = style({
+  display: "inline-block",
+  marginTop: 12,
+  width: "100%",
+  borderRadius: 16,
+});
 
 export const postBody = style({
   display: "flex",

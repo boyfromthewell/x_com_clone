@@ -5,12 +5,16 @@ import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
+import PostArticle from "./PostArticle";
+import { faker } from "@faker-js/faker";
+import PostImages from "./PostImages";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
-export default function Post() {
+export default function Post({ noImage }: { noImage?: boolean }) {
   const target = {
+    postId: 1,
     User: {
       id: "nuclear",
       nickname: "김정은",
@@ -18,11 +22,18 @@ export default function Post() {
     },
     content: "ㅠㅠ",
     createdAt: new Date(),
-    Images: [],
+    Images: [] as any,
   };
+  if (Math.random() > 0.5 && !noImage) {
+    target.Images.push(
+      { imageId: 1, link: faker.image.urlLoremFlickr() },
+      { imageId: 2, link: faker.image.urlLoremFlickr() },
+      { imageId: 3, link: faker.image.urlLoremFlickr() }
+    );
+  }
 
   return (
-    <article className={styles.post}>
+    <PostArticle post={target}>
       <div className={styles.postWrapper}>
         <div className={styles.postUserSection}>
           <Link
@@ -54,10 +65,12 @@ export default function Post() {
             </span>
           </div>
           <div>{target.content}</div>
-          <div className={styles.postImageSection}></div>
+          <div style={{ marginTop: 12 }}>
+            <PostImages post={target} />
+          </div>
           <ActionButtons />
         </div>
       </div>
-    </article>
+    </PostArticle>
   );
 }
