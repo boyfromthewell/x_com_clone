@@ -16,3 +16,7 @@ export const trendH3 = style({
   marginBottom: 12,
   padding: "0 16px",
 });
+
+export const noTrend = style({
+  padding: "12px 16px",
+});

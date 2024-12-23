@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { ReactNode } from "react";
 import "./globals.css";
 import { MSWProvider } from "@/lib/MSWComponent";
+import AuthSession from "@/lib/AuthSession";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,7 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <MSWProvider>{children}</MSWProvider>
+        <MSWProvider>
+          <AuthSession>{children}</AuthSession>
+        </MSWProvider>
       </body>
     </html>
   );

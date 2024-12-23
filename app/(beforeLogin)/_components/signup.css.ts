@@ -137,3 +137,8 @@ export const closeButton = style({
     backgroundColor: "rgba(15, 20, 25, 0.1)",
   },
 });
+
+export const error = style({
+  fontWeight: "bold",
+  color: "red",
+});
