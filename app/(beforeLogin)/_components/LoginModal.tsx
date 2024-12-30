@@ -20,7 +20,6 @@ export default function LoginModal() {
         password,
         redirect: false,
       });
-      console.log(result);
       router.replace("/home");
     } catch (err) {
       console.error(err);

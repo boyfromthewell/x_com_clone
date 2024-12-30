@@ -1,12 +1,20 @@
 import Link from "next/link";
 import * as styles from "./trend.css";
+import { HashTag } from "@/model/hashtag";
 
-export default function Trend() {
+interface TrendProps {
+  trend: HashTag;
+}
+
+export default function Trend({ trend }: TrendProps) {
   return (
-    <Link href="/search?q=트렌드" className={styles.container}>
+    <Link
+      href={`/search?q=${encodeURIComponent(trend.title)}`}
+      className={styles.container}
+    >
       <div className={styles.count}>실시간트렌드</div>
-      <div className={styles.title}>순용</div>
-      <div className={styles.count}>1,234 posts</div>
+      <div className={styles.title}>{trend.title}</div>
+      <div className={styles.count}>{trend.count.toLocaleString()} posts</div>
     </Link>
   );
 }

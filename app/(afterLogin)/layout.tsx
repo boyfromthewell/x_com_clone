@@ -6,10 +6,10 @@ import Image from "next/image";
 import NavMenu from "./_components/NavMenu";
 import LogoutButton from "./_components/LogoutButton";
 import TrendSection from "./_components/TrendSection";
-import FollowRecommend from "./_components/FollowRecommend";
 import RightSearchZone from "./_components/RightSearchZone";
 import { auth } from "@/auth";
 import RQProdiver from "@/lib/RQProvider";
+import FollowRecommendSection from "./_components/FollowRecommendSection";
 
 export default async function AfterLoginLayout({
   children,
@@ -63,15 +63,13 @@ export default async function AfterLoginLayout({
               <TrendSection />
               <div className={styles.followRecommend}>
                 <h3 className={styles.followRecommendH3}>팔로우 추천</h3>
-                <FollowRecommend />
-                <FollowRecommend />
-                <FollowRecommend />
+                <FollowRecommendSection />
               </div>
             </section>
           </div>
         </div>
+        {modal}
       </RQProdiver>
-      {modal}
     </div>
   );
 }

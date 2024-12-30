@@ -1,6 +1,7 @@
 import BackButton from "../_components/BackButton";
 import Post from "../_components/Post";
 import SearchForm from "../_components/SearchForm";
+import SearchResult from "./_components/SearchResult";
 import Tab from "./_components/Tab";
 import * as styles from "./search.css";
 
@@ -9,7 +10,7 @@ export default async function Page({
 }: {
   searchParams: Promise<{ q: string; f?: string; pf?: string }>;
 }) {
-  const { q } = await searchParams;
+  const query = await searchParams;
 
   return (
     <main className={styles.main}>
@@ -19,24 +20,13 @@ export default async function Page({
             <BackButton />
           </div>
           <div className={styles.formZone}>
-            <SearchForm q={q} />
+            <SearchForm q={query.q} pf={query.pf} f={query.f} />
           </div>
         </div>
-        <Tab q={q} />
+        <Tab q={query.q} />
       </div>
       <div className={styles.list}>
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        {/*<SearchResult searchParams={searchParams} />*/}
+        <SearchResult searchParams={query} />
       </div>
     </main>
   );

@@ -1,48 +1,46 @@
-import { faker } from "@faker-js/faker";
 import * as styles from "./page.css";
-import Post from "@/app/(afterLogin)/_components/Post";
 import CommentForm from "@/app/(afterLogin)/[username]/status/[id]/_components/CommentForm";
-import ActionButtons from "@/app/(afterLogin)/_components/ActionButtons";
 import CloseButton from "./_components/CloseButton";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { getSinglePost } from "@/app/(afterLogin)/[username]/status/[id]/_lib/getSinglePost";
+import { getComments } from "@/app/(afterLogin)/[username]/status/[id]/_lib/getComments";
+import ImageZone from "./_components/ImageZone";
+import SinglePost from "@/app/(afterLogin)/[username]/status/[id]/_components/SinglePost";
+import Comments from "@/app/(afterLogin)/[username]/status/[id]/_components/Comments";
 
-export default function Page() {
-  const photo = {
-    imageId: 1,
-    link: faker.image.urlLoremFlickr(),
-    Post: {
-      content: faker.lorem.text(),
-    },
-  };
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["posts", id],
+    queryFn: getSinglePost,
+  });
+  await queryClient.prefetchQuery({
+    queryKey: ["posts", id, "comments"],
+    queryFn: getComments,
+  });
+  const dehydratedState = dehydrate(queryClient);
+
   return (
     <div className={styles.container}>
-      <CloseButton />
-      <div className={styles.imageZone}>
-        <img
-          src={photo.link}
-          alt={photo.Post?.content}
-          className={styles.hiddenImage}
-        />
-        <div
-          className={styles.image}
-          style={{ backgroundImage: `url(${photo.link})` }}
-        />
-        <div className={styles.buttonZone}>
-          <div className={styles.buttonInner}>
-            <ActionButtons white />
-          </div>
+      <HydrationBoundary state={dehydratedState}>
+        <CloseButton />
+        <ImageZone id={id} />
+        <div className={styles.commentZone}>
+          <SinglePost id={id} noImage />
+          <CommentForm id={id} />
+          <Comments id={id} />
         </div>
-      </div>
-      <div className={styles.commentZone}>
-        <Post noImage />
-        <CommentForm />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-      </div>
+      </HydrationBoundary>
     </div>
   );
 }

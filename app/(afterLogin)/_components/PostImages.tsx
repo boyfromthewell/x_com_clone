@@ -31,7 +31,7 @@ export default function PostImages({ post }: Props) {
           backgroundSize: "contain",
         }}
       >
-        <img src={post.Images[0]?.link} alt="" />
+        <img src={post.Images[0]?.link} alt="post img" />
       </Link>
     );
   }

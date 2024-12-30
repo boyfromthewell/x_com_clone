@@ -2,18 +2,19 @@
 
 import Image from "next/image";
 import * as styles from "./followRecommend.css";
+import { MouseEventHandler } from "react";
+import type { User } from "@/model/user";
+import Link from "next/link";
 
-export default function FollowRecommend() {
-  const user = {
-    id: "kim",
-    nickname: "김정은",
-    image: "/kimjungeun.webp",
-  };
+interface FollowRecommendProps {
+  user: User;
+}
 
-  const onFollow = () => {};
+export default function FollowRecommend({ user }: FollowRecommendProps) {
+  const onFollow: MouseEventHandler<HTMLButtonElement> = (e) => {};
 
   return (
-    <div className={styles.container}>
+    <Link href={`/${user.id}`} className={styles.container}>
       <div>
         <div className={styles.userLogo}>
           <Image
@@ -34,6 +35,6 @@ export default function FollowRecommend() {
           팔로우
         </button>
       </div>
-    </div>
+    </Link>
   );
 }

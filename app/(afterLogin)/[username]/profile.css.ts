@@ -26,9 +26,22 @@ export const headerTitle = style({
 
 export const userZone = style({
   display: "flex",
-  alignItems: "center",
+  flexDirection: "column",
   borderBottom: "1px solid rgb(239, 243, 244)",
   padding: "12px 16px",
+});
+
+export const userRow = style({
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+});
+
+export const userFollower = style({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-start",
+  paddingTop: 8,
 });
 
 export const userImage = style({
@@ -36,6 +49,9 @@ export const userImage = style({
   alignItems: "center",
   marginRight: "12px",
   borderRadius: "50%",
+  width: 134,
+  height: 134,
+  border: "1px solid lightgray",
 });
 
 export const userImageImg = style({

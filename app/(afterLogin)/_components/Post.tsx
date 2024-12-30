@@ -8,29 +8,19 @@ import Image from "next/image";
 import PostArticle from "./PostArticle";
 import { faker } from "@faker-js/faker";
 import PostImages from "./PostImages";
+import type { Post as IPost } from "@/model/post";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
-export default function Post({ noImage }: { noImage?: boolean }) {
-  const target = {
-    postId: 1,
-    User: {
-      id: "nuclear",
-      nickname: "김정은",
-      image: "/kimjungeun.webp",
-    },
-    content: "ㅠㅠ",
-    createdAt: new Date(),
-    Images: [] as any,
-  };
-  if (Math.random() > 0.5 && !noImage) {
-    target.Images.push(
-      { imageId: 1, link: faker.image.urlLoremFlickr() },
-      { imageId: 2, link: faker.image.urlLoremFlickr() },
-      { imageId: 3, link: faker.image.urlLoremFlickr() }
-    );
-  }
+export default function Post({
+  noImage,
+  post,
+}: {
+  noImage?: boolean;
+  post: IPost;
+}) {
+  const target = post;
 
   return (
     <PostArticle post={target}>
@@ -65,9 +55,12 @@ export default function Post({ noImage }: { noImage?: boolean }) {
             </span>
           </div>
           <div>{target.content}</div>
-          <div style={{ marginTop: 12 }}>
-            <PostImages post={target} />
-          </div>
+          {!noImage && (
+            <div style={{ marginTop: 12 }}>
+              <PostImages post={target} />
+            </div>
+          )}
+
           <ActionButtons />
         </div>
       </div>
