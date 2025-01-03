@@ -1,5 +1,4 @@
 import BackButton from "../_components/BackButton";
-import Post from "../_components/Post";
 import SearchForm from "../_components/SearchForm";
 import SearchResult from "./_components/SearchResult";
 import Tab from "./_components/Tab";
@@ -23,7 +22,7 @@ export default async function Page({
             <SearchForm q={query.q} pf={query.pf} f={query.f} />
           </div>
         </div>
-        <Tab q={query.q} />
+        <Tab />
       </div>
       <div className={styles.list}>
         <SearchResult searchParams={query} />

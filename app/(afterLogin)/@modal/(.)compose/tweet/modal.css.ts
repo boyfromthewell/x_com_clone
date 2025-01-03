@@ -67,7 +67,11 @@ export const postUserSection = style({
 export const postUserImage = style({
   width: 40,
   height: 40,
-  borderRadius: 20,
+});
+
+export const postUserImageImg = style({
+  borderRadius: "50%",
+  objectFit: "cover",
 });
 
 export const inputDiv = style({

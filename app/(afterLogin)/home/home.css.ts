@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { keyframes, style } from "@vanilla-extract/css";
 
 export const main = style({
   width: 600,
@@ -16,4 +16,17 @@ export const main = style({
       width: 600,
     },
   },
+});
+
+const rotate = keyframes({
+  from: {
+    rotate: "0deg",
+  },
+  "100%": {
+    rotate: "360deg",
+  },
+});
+
+export const loader = style({
+  animation: `${rotate} 2s linear infinite`,
 });
