@@ -51,3 +51,13 @@ export const followButton = style({
     backgroundColor: "rgb(39, 44, 48)",
   },
 });
+
+export const followed = style({
+  background: "white",
+  color: "black",
+  border: "1px solid grey",
+
+  ":hover": {
+    background: "lightgray",
+  },
+});

@@ -2,17 +2,12 @@
 
 import Image from "next/image";
 import * as styles from "./logoutButton.css";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
+import { Session } from "next-auth";
 
-export default function LogoutButton() {
-  const router = useRouter();
-  const { data: me } = useSession();
-
+export default function LogoutButton({ me }: { me: Session | null }) {
   const onLogout = () => {
-    signOut({ redirect: false }).then(() => {
-      router.replace("/");
-    });
+    signOut({ callbackUrl: "/" });
   };
 
   if (!me?.user) return null;

@@ -1,6 +1,12 @@
 import * as styles from "./explore.css";
 import SearchForm from "../_components/SearchForm";
 import TrendSection from "./_components/TrendSection";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "탐색하기 / X",
+  description: "탐색해보세요.",
+};
 
 export default function Page() {
   return (

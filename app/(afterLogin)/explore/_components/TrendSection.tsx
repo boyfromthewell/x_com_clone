@@ -11,6 +11,6 @@ export default function TrendSection() {
     queryFn: getTrends,
   });
   return data?.map((trend, idx) => (
-    <Trend trend={trend} key={`${trend.tagId}${idx}`} />
+    <Trend trend={trend} key={`${trend.title}${idx}`} />
   ));
 }

@@ -26,7 +26,7 @@ export default function SignupModal() {
     if (message === "user_exists") {
       return "이미 사용 중인 아이디입니다.";
     }
-    return "";
+    return message;
   };
 
   return (
@@ -50,6 +50,7 @@ export default function SignupModal() {
                   type="text"
                   placeholder=""
                   required
+                  defaultValue={state.id as string}
                 />
               </div>
               <div className={styles.inputDiv}>
@@ -63,6 +64,7 @@ export default function SignupModal() {
                   type="text"
                   placeholder=""
                   required
+                  defaultValue={state.nickname as string}
                 />
               </div>
               <div className={styles.inputDiv}>
@@ -76,6 +78,7 @@ export default function SignupModal() {
                   type="password"
                   placeholder=""
                   required
+                  defaultValue={state.password as string}
                 />
               </div>
               <div className={styles.inputDiv}>
@@ -89,6 +92,7 @@ export default function SignupModal() {
                   type="file"
                   accept="image/*"
                   required
+                  defaultValue={state.image as string}
                 />
               </div>
             </div>

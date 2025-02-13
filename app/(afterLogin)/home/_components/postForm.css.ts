@@ -1,4 +1,3 @@
-import { JSONSchema4 } from "./../../../../node_modules/@types/json-schema/index.d";
 import { style } from "@vanilla-extract/css";
 
 export const postUserSection = style({

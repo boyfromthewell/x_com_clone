@@ -1,16 +1,14 @@
-import Image from "next/image";
-import BackButton from "../_components/BackButton";
-import Post from "../_components/Post";
 import * as styles from "./profile.css";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { getUser } from "./_lib/getUser";
 import { getUserPosts } from "./_lib/getUserPosts";
 import UserInfo from "./_components/UserInfo";
 import UserPosts from "./_components/UserPosts";
+import { getUserServer } from "./_lib/getUserServer";
+import { auth } from "@/auth";
 
 export default async function Page({
   params,
@@ -18,14 +16,15 @@ export default async function Page({
   params: Promise<{ username: string }>;
 }) {
   const { username } = await params;
+  const session = await auth();
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["users", username],
-    queryFn: getUser,
+    queryFn: getUserServer,
   });
   await queryClient.prefetchQuery({
-    queryKey: ["posts", "users", "recommends"],
+    queryKey: ["posts", "users", username],
     queryFn: getUserPosts,
   });
 
@@ -34,7 +33,7 @@ export default async function Page({
   return (
     <main className={styles.main}>
       <HydrationBoundary state={dehydratedState}>
-        <UserInfo username={username} />
+        <UserInfo username={username} session={session} />
         <div>
           <UserPosts username={username} />
         </div>

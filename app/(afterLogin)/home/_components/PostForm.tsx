@@ -1,29 +1,116 @@
 "use client";
 
-import { ChangeEventHandler, FormEventHandler, useRef, useState } from "react";
+import { ChangeEventHandler, FormEvent, useRef, useState } from "react";
 import * as styles from "./postForm.css";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+import TextareaAutosize from "react-textarea-autosize";
+import { Post } from "@/model/post";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export default function PostForm() {
+export default function PostForm({ me }: { me: Session | null }) {
   const imageRef = useRef<HTMLInputElement>(null);
   const [content, setContent] = useState("");
-  const { data: me } = useSession();
+  const [preview, setPreview] = useState<
+    Array<{ dataUrl: string; file: File } | null>
+  >([]);
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (e: FormEvent) => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append("content", content);
+      preview.forEach((p) => {
+        if (p) {
+          formData.append("images", p.file);
+        }
+      });
+      return fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
+        method: "post",
+        credentials: "include",
+        body: formData,
+      });
+    },
+    async onSuccess(response) {
+      const newPost = await response.json();
+      setContent("");
+      setPreview([]);
+      if (queryClient.getQueryData(["posts", "recommends"])) {
+        queryClient.setQueryData(
+          ["posts", "recommends"],
+          (prevData: { pages: Post[][] }) => {
+            const shallow = {
+              ...prevData,
+              pages: [...prevData.pages],
+            };
+            shallow.pages[0] = [...shallow.pages[0]];
+            shallow.pages[0].unshift(newPost);
+            return shallow;
+          }
+        );
+      }
+      if (queryClient.getQueryData(["posts", "followings"])) {
+        queryClient.setQueryData(
+          ["posts", "followings"],
+          (prevData: { pages: Post[][] }) => {
+            const shallow = {
+              ...prevData,
+              pages: [...prevData.pages],
+            };
+            shallow.pages[0] = [...shallow.pages[0]];
+            shallow.pages[0].unshift(newPost);
+            return shallow;
+          }
+        );
+      }
+    },
+    onError(error) {
+      console.error(error);
+      alert("업로드 중 에러가 발생했습니다.");
+    },
+  });
 
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setContent(e.target.value);
-  };
-
-  const onSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
   };
 
   const onClickButton = () => {
     imageRef.current?.click();
   };
 
+  const onRemoveImage = (index: number) => () => {
+    setPreview((prev) => {
+      const prevImage = [...prev];
+      prevImage[index] = null;
+      return prevImage;
+    });
+  };
+
+  const onUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
+    e.preventDefault();
+    if (e.target.files) {
+      Array.from(e.target.files).forEach((file, idx) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreview((prev) => {
+            const prevImage = [...prev];
+            prevImage[idx] = {
+              dataUrl: reader.result as string,
+              file,
+            };
+            return prevImage;
+          });
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
   return (
-    <form className={styles.postForm} onSubmit={onSubmit}>
+    <form className={styles.postForm} onSubmit={mutation.mutate}>
       <div className={styles.postUserSection}>
         <div className={styles.postUserImg}>
           <Image
@@ -36,12 +123,32 @@ export default function PostForm() {
         </div>
       </div>
       <div className={styles.postInputSection}>
-        <textarea
+        <TextareaAutosize
           value={content}
           onChange={onChange}
           placeholder="무슨 일이 일어나고 있나요?"
           className={styles.postTextarea}
         />
+        <div style={{ display: "flex" }}>
+          {preview.map(
+            (v, idx) =>
+              v && (
+                <div key={idx} style={{ flex: 1 }} onClick={onRemoveImage(idx)}>
+                  <Image
+                    width={120}
+                    height={120}
+                    src={v.dataUrl}
+                    alt="미리보기"
+                    style={{
+                      objectFit: "contain",
+                      width: "100%",
+                      maxHeight: 100,
+                    }}
+                  />
+                </div>
+              )
+          )}
+        </div>
         <div className={styles.postButtonSection}>
           <div className={styles.footerButtons}>
             <div className={styles.footerButtonLeft}>
@@ -51,6 +158,7 @@ export default function PostForm() {
                 multiple
                 hidden
                 ref={imageRef}
+                onChange={onUpload}
               />
               <button
                 className={styles.uploadButton}

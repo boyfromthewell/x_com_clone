@@ -11,7 +11,7 @@ export default function PostRecommends() {
   const { data, fetchNextPage, hasNextPage, isFetching, isPending } =
     useSuspenseInfiniteQuery<
       IPost[],
-      Object,
+      object,
       InfiniteData<IPost[]>,
       [_1: string, _2: string],
       number
@@ -28,6 +28,7 @@ export default function PostRecommends() {
 
   useEffect(() => {
     if (inView) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       !isFetching && hasNextPage && fetchNextPage();
     }
   }, [fetchNextPage, hasNextPage, inView, isFetching]);

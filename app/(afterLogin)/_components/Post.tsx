@@ -8,6 +8,7 @@ import Image from "next/image";
 import PostArticle from "./PostArticle";
 import PostImages from "./PostImages";
 import type { Post as IPost } from "@/model/post";
+import { MouseEventHandler } from "react";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
@@ -21,6 +22,9 @@ export default function Post({
 }) {
   const target = post;
 
+  const stopPropagation: MouseEventHandler = (e) => {
+    e.stopPropagation();
+  };
   return (
     <PostArticle post={target}>
       <div className={styles.postWrapper}>
@@ -28,6 +32,7 @@ export default function Post({
           <Link
             href={`/${target.User.id}`}
             className={styles.postUserImageWrapper}
+            onClick={stopPropagation}
           >
             <Image
               src={target.User.image}
@@ -41,7 +46,7 @@ export default function Post({
         </div>
         <div className={styles.postBody}>
           <div className={styles.postMeta}>
-            <Link href={`/${target.User.id}`}>
+            <Link href={`/${target.User.id}`} onClick={stopPropagation}>
               <span className={styles.postUserName}>
                 {target.User.nickname}
               </span>
@@ -60,7 +65,7 @@ export default function Post({
             </div>
           )}
 
-          <ActionButtons />
+          <ActionButtons post={target} />
         </div>
       </div>
     </PostArticle>

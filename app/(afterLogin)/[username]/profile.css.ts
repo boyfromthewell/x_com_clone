@@ -89,6 +89,16 @@ export const followButton = style({
   },
 });
 
+export const followed = style({
+  background: "white",
+  color: "black",
+  border: "1px solid grey",
+
+  ":hover": {
+    background: "lightgray",
+  },
+});
+
 export const backButton = style({
   width: "34px",
   height: "34px",

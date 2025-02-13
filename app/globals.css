@@ -21,6 +21,7 @@ body {
 
 input,
 textarea,
-button {
+button,
+a {
   font-family: "inherit";
 }

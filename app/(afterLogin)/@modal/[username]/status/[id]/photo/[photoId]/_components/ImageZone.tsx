@@ -12,7 +12,7 @@ type Props = {
 export default function ImageZone({ id }: Props) {
   const { data: post } = useQuery<
     IPost,
-    Object,
+    object,
     IPost,
     [_1: string, _2: string]
   >({

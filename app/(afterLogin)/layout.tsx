@@ -48,7 +48,7 @@ export default async function AfterLoginLayout({
                     </svg>
                   </Link>
                 </nav>
-                <LogoutButton />
+                <LogoutButton me={session} />
               </>
             )}
           </div>
