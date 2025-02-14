@@ -17,6 +17,7 @@ export default function SinglePost({ id, noImage }: Props) {
   >({
     queryKey: ["posts", id],
     queryFn: getSinglePost,
+    staleTime: 10 * 3000,
   });
   if (error) {
     return (

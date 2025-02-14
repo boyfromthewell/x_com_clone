@@ -1,25 +1,96 @@
 "use client";
-import { useRef, useState } from "react";
+import { ChangeEventHandler, FormEvent, useRef, useState } from "react";
 import * as styles from "./commentForm.css";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import TextareaAutosize from "react-textarea-autosize";
+import { Post } from "@/model/post";
 
 export default function CommentForm({ id }: { id: string }) {
   const [content, setContent] = useState("");
   const imageRef = useRef<HTMLInputElement>(null);
-  const onClickButton = () => {};
-  const onSubmit = () => {};
-  const onChange = () => {};
+  const [preview, setPreview] = useState<
+    Array<{
+      dataUrl: string;
+      file: File;
+    } | null>
+  >([]);
+
+  const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    setContent(e.target.value);
+  };
+
+  const onClickButton = () => {
+    imageRef.current?.click();
+  };
 
   const { data: me } = useSession();
   const queryClient = useQueryClient();
-  const post = queryClient.getQueryData(["posts", id]);
+  const post = queryClient.getQueryData<Post>(["posts", id]);
+
+  const comment = useMutation({
+    mutationFn: (e: FormEvent) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("content", content);
+      preview.forEach((p) => {
+        p && formData.append("images", p.file);
+      });
+      return fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post?.postId}/comments`,
+        {
+          method: "post",
+          credentials: "include",
+          body: formData,
+        }
+      );
+    },
+    async onSuccess() {
+      console.log(queryClient.getQueryCache().getAll());
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["posts", String(post?.postId)],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ["posts", String(post?.postId), "comments"],
+        }),
+      ]);
+    },
+  });
+
+  const onRemoveImage = (index: number) => () => {
+    setPreview((prevPreview) => {
+      const prev = [...prevPreview];
+      prev[index] = null;
+      return prev;
+    });
+  };
+
+  const onUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
+    e.preventDefault();
+    if (e.target.files) {
+      Array.from(e.target.files).forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreview((prevPreview) => {
+            const prev = [...prevPreview];
+            prev[index] = {
+              dataUrl: reader.result as string,
+              file,
+            };
+            return prev;
+          });
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
 
   if (!post) return null;
 
   return (
-    <form className={styles.postForm} onSubmit={onSubmit}>
+    <form className={styles.postForm} onSubmit={comment.mutate}>
       <div className={styles.postUserSection}>
         <div className={styles.postUserImage}>
           <Image
@@ -32,12 +103,34 @@ export default function CommentForm({ id }: { id: string }) {
         </div>
       </div>
       <div className={styles.postInputSection}>
-        <textarea
+        <TextareaAutosize
           value={content}
           onChange={onChange}
           placeholder="답글 게시하기"
           className={styles.postFormTextarea}
         />
+        <div style={{ display: "flex" }}>
+          {preview.map(
+            (v, index) =>
+              v && (
+                <div
+                  key={index}
+                  style={{ flex: 1 }}
+                  onClick={onRemoveImage(index)}
+                >
+                  <img
+                    src={v.dataUrl}
+                    alt="미리보기"
+                    style={{
+                      width: "100%",
+                      objectFit: "contain",
+                      maxHeight: 100,
+                    }}
+                  />
+                </div>
+              )
+          )}
+        </div>
         <div className={styles.postButtonSection}>
           <div className={styles.footerButtons}>
             <div className={styles.footerButtonLeft}>
@@ -47,6 +140,7 @@ export default function CommentForm({ id }: { id: string }) {
                 multiple
                 hidden
                 ref={imageRef}
+                onChange={onUpload}
               />
               <button
                 className={styles.uploadButton}

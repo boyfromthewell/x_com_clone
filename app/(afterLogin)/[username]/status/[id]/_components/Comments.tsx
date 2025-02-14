@@ -19,7 +19,7 @@ export default function Comments({ id }: Props) {
   >({
     queryKey: ["posts", id, "comments"],
     queryFn: getComments,
-    enabled: !!post,
+    staleTime: 10 * 3000,
   });
   if (post) {
     return data?.map((post) => <Post post={post} key={post.postId} />);

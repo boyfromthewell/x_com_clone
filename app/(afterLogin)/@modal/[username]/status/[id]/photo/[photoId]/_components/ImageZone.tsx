@@ -18,6 +18,7 @@ export default function ImageZone({ id }: Props) {
   >({
     queryKey: ["posts", id],
     queryFn: getSinglePost,
+    staleTime: 10 * 3000,
   });
 
   if (!post?.Images[0]) {

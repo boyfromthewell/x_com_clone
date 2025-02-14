@@ -7,11 +7,7 @@ export const getSinglePost = async ({
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${id}`,
     {
-      next: {
-        tags: ["posts", id],
-      },
       credentials: "include",
-      cache: "force-cache",
     }
   );
 

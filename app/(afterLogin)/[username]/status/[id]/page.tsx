@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-query";
 import SinglePost from "./_components/SinglePost";
 import Comments from "./_components/Comments";
-import { getComments } from "./_lib/getComments";
+
 import { Metadata } from "next";
 import { getUserServer } from "../../_lib/getUserServer";
 import { User } from "@/model/user";
@@ -44,10 +44,7 @@ export default async function Page({
     queryKey: ["posts", id],
     queryFn: getSinglePostServer,
   });
-  await queryClient.prefetchQuery({
-    queryKey: ["posts", id, "comments"],
-    queryFn: getComments,
-  });
+
   const dehydratedState = dehydrate(queryClient);
 
   return (

@@ -9,10 +9,6 @@ export const getSinglePostServer = async ({
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${id}`,
     {
-      next: {
-        revalidate: 3600,
-        tags: ["posts", id],
-      },
       credentials: "include",
       headers: { Cookie: (await cookies()).toString() },
     }

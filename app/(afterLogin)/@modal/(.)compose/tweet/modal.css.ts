@@ -59,6 +59,14 @@ export const modalBody = style({
   flexDirection: "row",
 });
 
+export const modalOriginal = style({
+  padding: "0 16px 20px",
+  marginTop: 54,
+  marginBottom: -54,
+  display: "flex",
+  flexDirection: "row",
+});
+
 export const postUserSection = style({
   marginRight: 12,
   width: 40,

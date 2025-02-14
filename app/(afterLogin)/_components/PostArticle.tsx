@@ -1,29 +1,23 @@
 "use client";
-import { ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import * as styles from "./post.css";
 import { useRouter } from "next/navigation";
+import { Post } from "@/model/post";
 
 interface Props {
   children: ReactNode;
-  post: {
-    postId: number;
-    content: string;
-    User: {
-      id: string;
-      nickname: string;
-      image: string;
-    };
-    createdAt: Date;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Images: any[];
-  };
+  post: Post;
 }
 
 export default function PostArticle({ children, post }: Props) {
   const router = useRouter();
+  let target = post;
+  if (post.Original) {
+    target = post.Original;
+  }
 
-  const onClick = () => {
-    router.push(`/${post.User.id}/status/${post.postId}`);
+  const onClick: MouseEventHandler = () => {
+    router.push(`/${target.User.id}/status/${target.postId}`);
   };
 
   return (

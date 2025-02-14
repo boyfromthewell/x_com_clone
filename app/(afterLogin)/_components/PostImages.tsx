@@ -1,6 +1,7 @@
 import Link from "next/link";
 import style from "./postImage.module.css";
 import cx from "classnames";
+import { MouseEventHandler } from "react";
 
 type Props = {
   post: {
@@ -17,6 +18,10 @@ type Props = {
 };
 
 export default function PostImages({ post }: Props) {
+  const stopPropagation: MouseEventHandler = (e) => {
+    e.stopPropagation();
+  };
+
   if (!post.Images) return null;
 
   if (!post.Images.length) return null;
@@ -30,6 +35,7 @@ export default function PostImages({ post }: Props) {
           backgroundImage: `url(${post.Images[0]?.link})`,
           backgroundSize: "contain",
         }}
+        onClick={stopPropagation}
       >
         <img src={post.Images[0]?.link} alt="post img" />
       </Link>
@@ -37,7 +43,10 @@ export default function PostImages({ post }: Props) {
   }
   if (post.Images.length === 2) {
     return (
-      <div className={cx(style.postImageSection, style.twoImage)}>
+      <div
+        className={cx(style.postImageSection, style.twoImage)}
+        onClick={stopPropagation}
+      >
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[0].imageId}`}
           style={{
@@ -57,7 +66,10 @@ export default function PostImages({ post }: Props) {
   }
   if (post.Images.length === 3) {
     return (
-      <div className={cx(style.postImageSection, style.threeImage)}>
+      <div
+        className={cx(style.postImageSection, style.threeImage)}
+        onClick={stopPropagation}
+      >
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[0].imageId}`}
           style={{
@@ -86,7 +98,10 @@ export default function PostImages({ post }: Props) {
   }
   if (post.Images.length === 4) {
     return (
-      <div className={cx(style.postImageSection, style.fourImage)}>
+      <div
+        className={cx(style.postImageSection, style.fourImage)}
+        onClick={stopPropagation}
+      >
         <Link
           href={`/${post.User.id}/status/${post.postId}/photo/${post.Images[0].imageId}`}
           style={{
