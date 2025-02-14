@@ -13,6 +13,7 @@ export default function UserPosts({ username }: { username: string }) {
   >({
     queryKey: ["posts", "users", username],
     queryFn: getUserPosts,
+    staleTime: 10 * 3000,
   });
 
   const queryClient = useQueryClient();

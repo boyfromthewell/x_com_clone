@@ -8,8 +8,29 @@ import {
 } from "@tanstack/react-query";
 import SinglePost from "./_components/SinglePost";
 import Comments from "./_components/Comments";
-import { getSinglePost } from "./_lib/getSinglePost";
 import { getComments } from "./_lib/getComments";
+import { Metadata } from "next";
+import { getUserServer } from "../../_lib/getUserServer";
+import { User } from "@/model/user";
+import { Post } from "@/model/post";
+import { getSinglePostServer } from "./_lib/getSinglePostServer";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string; username: string }>;
+}): Promise<Metadata> {
+  const { username, id } = await params;
+  const [user, post]: [User, Post] = await Promise.all([
+    getUserServer({ queryKey: ["users", username] }),
+    getSinglePostServer({ queryKey: ["posts", id] }),
+  ]);
+
+  return {
+    title: `X에서 ${user.nickname} 님 : ${post.content}`,
+    description: post.content,
+  };
+}
 
 export default async function Page({
   params,
@@ -21,7 +42,7 @@ export default async function Page({
 
   await queryClient.prefetchQuery({
     queryKey: ["posts", id],
-    queryFn: getSinglePost,
+    queryFn: getSinglePostServer,
   });
   await queryClient.prefetchQuery({
     queryKey: ["posts", id, "comments"],

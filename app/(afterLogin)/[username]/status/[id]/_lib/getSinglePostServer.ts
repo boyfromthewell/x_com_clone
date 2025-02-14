@@ -1,21 +1,23 @@
 import { cookies } from "next/headers";
 
-export const getUserServer = async ({
+export const getSinglePostServer = async ({
   queryKey,
 }: {
   queryKey: [string, string];
 }) => {
-  const [_1, username] = queryKey;
+  const [_1, id] = queryKey;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/${username}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${id}`,
     {
       next: {
-        tags: ["users", username],
+        revalidate: 3600,
+        tags: ["posts", id],
       },
       credentials: "include",
       headers: { Cookie: (await cookies()).toString() },
     }
   );
+
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }

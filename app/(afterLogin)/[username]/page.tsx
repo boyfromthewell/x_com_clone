@@ -9,6 +9,21 @@ import UserInfo from "./_components/UserInfo";
 import UserPosts from "./_components/UserPosts";
 import { getUserServer } from "./_lib/getUserServer";
 import { auth } from "@/auth";
+import { User } from "@/model/user";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ username: string }>;
+}): Promise<Metadata> {
+  const { username } = await params;
+  const user: User = await getUserServer({ queryKey: ["users", username] });
+  return {
+    title: `${user.nickname} (${user.id}) / X`,
+    description: `${user.nickname} (${user.id}) 프로필`,
+  };
+}
 
 export default async function Page({
   params,

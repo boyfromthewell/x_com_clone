@@ -12,10 +12,8 @@ export const getUserPosts: QueryFunction<
     {
       next: {
         tags: ["posts", "users", username],
-        revalidate: 600,
       },
       credentials: "include",
-      cache: "force-cache",
     }
   );
 
