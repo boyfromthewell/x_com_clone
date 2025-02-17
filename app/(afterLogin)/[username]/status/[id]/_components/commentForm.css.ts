@@ -34,6 +34,7 @@ export const postFormTextarea = style({
   fontSize: "20px",
   lineHeight: "24px",
   outline: "none",
+  resize: "none",
 });
 
 export const footerButtons = style({

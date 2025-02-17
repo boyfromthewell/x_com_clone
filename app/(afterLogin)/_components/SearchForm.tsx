@@ -31,13 +31,13 @@ export default function SearchForm({
         type="hidden"
         name="pf"
         className={styles.searchInput}
-        defaultValue={pf}
+        defaultValue={pf && pf}
       />
       <input
         type="hidden"
         name="f"
         className={styles.searchInput}
-        defaultValue={f}
+        defaultValue={f && f}
       />
     </Form>
   );
