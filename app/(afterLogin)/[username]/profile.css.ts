@@ -89,6 +89,24 @@ export const followButton = style({
   },
 });
 
+export const messageButton = style({
+  border: "1px solid rgb(207, 217, 222)",
+  width: 34,
+  borderRadius: 17,
+  height: 34,
+  backgroundColor: "white",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: 15,
+  cursor: "pointer",
+  marginRight: 8,
+
+  ":hover": {
+    backgroundColor: "rgb(15, 20, 25, 0.09)",
+  },
+});
+
 export const followed = style({
   background: "white",
   color: "black",

@@ -2,7 +2,7 @@ import { style, styleVariants } from "@vanilla-extract/css";
 
 export const main = style({
   width: "600px",
-  minHeight: "100dvh",
+  height: "100dvh",
   borderColor: "rgb(239, 243, 244)",
   borderRightWidth: "1px",
   borderLeftWidth: "1px",
@@ -18,6 +18,7 @@ export const header = style({
   height: "54px",
   display: "flex",
   alignItems: "center",
+  padding: "0 16px",
 });
 
 export const headerTitle = style({
@@ -97,4 +98,10 @@ export const date = style({
   marginTop: "8px",
   color: "#536471",
   fontSize: "13px",
+});
+
+export const list = style({
+  flex: 1,
+  padding: "0 16px",
+  overflowY: "scroll",
 });
