@@ -5,7 +5,7 @@ export const getSearchResult: QueryFunction<
   Post[],
   [_1: string, _2: string, searchParams: { q: string; pf?: string; f?: string }]
 > = async ({ queryKey }) => {
-  const [_1, _2, searchParams] = queryKey;
+  const [, , searchParams] = queryKey;
   const urlSearchParams = new URLSearchParams(searchParams);
 
   const res = await fetch(

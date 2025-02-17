@@ -11,7 +11,7 @@ type Props = {
 export default function SinglePost({ id, noImage }: Props) {
   const { data: post, error } = useQuery<
     IPost,
-    Object,
+    object,
     IPost,
     [_1: string, _2: string]
   >({

@@ -41,7 +41,7 @@ export default function TweetModal() {
       const formData = new FormData();
       formData.append("content", content);
       preview.forEach((p) => {
-        p && formData.append("images", p.file);
+        if (p) formData.append("images", p.file);
       });
       return fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
         method: "post",
@@ -49,7 +49,7 @@ export default function TweetModal() {
         body: formData,
       });
     },
-    async onSuccess(response, variable) {
+    async onSuccess(response) {
       const newPost = await response.json();
       setContent("");
       setPreview([]);
@@ -66,12 +66,12 @@ export default function TweetModal() {
               .find((v) => v.postId === parent?.postId);
             if (obj) {
               // 존재는 하는지
-              const pageIndex = value.pages.findIndex((page) =>
-                page.includes(obj)
-              );
-              const index = value.pages[pageIndex].findIndex(
-                (v) => v.postId === parent?.postId
-              );
+              // const pageIndex = value.pages.findIndex((page) =>
+              //   page.includes(obj)
+              // );
+              // const index = value.pages[pageIndex].findIndex(
+              //   (v) => v.postId === parent?.postId
+              // );
 
               const shallow = {
                 ...value,
@@ -103,7 +103,7 @@ export default function TweetModal() {
       const formData = new FormData();
       formData.append("content", content);
       preview.forEach((p) => {
-        p && formData.append("images", p.file);
+        if (p) formData.append("images", p.file);
       });
       return fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${parent?.postId}/comments`,

@@ -10,6 +10,7 @@ export const {
     signIn: "/i/flow/login",
     newUser: "/i/flow/signup",
   },
+  trustHost: true,
   providers: [
     CredentialsProvider({
       async authorize(credentials) {

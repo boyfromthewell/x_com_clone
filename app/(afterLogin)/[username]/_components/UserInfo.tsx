@@ -7,7 +7,7 @@ import * as styles from "../profile.css";
 import { MouseEventHandler } from "react";
 import Image from "next/image";
 import cx from "classnames";
-import { useSession } from "next-auth/react";
+
 import { Session } from "next-auth";
 
 export default function UserInfo({
@@ -19,7 +19,7 @@ export default function UserInfo({
 }) {
   const { data: user, error } = useQuery<
     User,
-    Object,
+    object,
     User,
     [_1: string, _2: string]
   >({

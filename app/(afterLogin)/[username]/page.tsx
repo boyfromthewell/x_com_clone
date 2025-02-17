@@ -22,6 +22,17 @@ export async function generateMetadata({
   return {
     title: `${user.nickname} (${user.id}) / X`,
     description: `${user.nickname} (${user.id}) 프로필`,
+    openGraph: {
+      title: `${user.nickname} (${user.id}) / X`,
+      description: `${user.nickname} (${user.id}) 프로필`,
+      images: [
+        {
+          url: `${user.image}`,
+          width: 400,
+          height: 400,
+        },
+      ],
+    },
   };
 }
 

@@ -20,6 +20,7 @@ const mockingEnabledPromise =
           },
         });
         worker.use(...handlers);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (module as any).hot?.dispose(() => {
           worker.stop();
         });

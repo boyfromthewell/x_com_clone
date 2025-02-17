@@ -11,7 +11,7 @@ type Props = {
 export default function SearchResult({ searchParams }: Props) {
   const { data } = useQuery<
     IPost[],
-    Object,
+    object,
     IPost[],
     [_1: string, _2: string, Props["searchParams"]]
   >({

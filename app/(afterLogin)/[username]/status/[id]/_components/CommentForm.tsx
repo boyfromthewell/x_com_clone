@@ -35,7 +35,7 @@ export default function CommentForm({ id }: { id: string }) {
       const formData = new FormData();
       formData.append("content", content);
       preview.forEach((p) => {
-        p && formData.append("images", p.file);
+        if (p) formData.append("images", p.file);
       });
       return fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post?.postId}/comments`,

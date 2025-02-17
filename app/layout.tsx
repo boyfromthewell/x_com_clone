@@ -22,8 +22,9 @@ if (
   process.env.NODE_ENV !== "production" &&
   process.env.NEXT_PUBLIC_MSW_ENABLED !== "false"
 ) {
-  const { server } = require("@/mocks/http");
-  server.listen();
+  import("@/mocks/http").then(({ server }) => {
+    server.listen();
+  });
 }
 
 export default function RootLayout({

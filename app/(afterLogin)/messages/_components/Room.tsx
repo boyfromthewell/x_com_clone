@@ -35,18 +35,14 @@ export default function Room() {
         />
       </div>
       <div className={styles.roomChatInfo}>
-        <div className={styles.roomUserInfo}>
+        <div>
           <b className={styles.roomChatInfoBold}>{user.nickname}</b>
           &nbsp;
           <span>@{user.id}</span>
           &nbsp; · &nbsp;
-          <span className={styles.postDate}>
-            {dayjs(user.Messages?.at(-1)?.createdAt).fromNow(true)}
-          </span>
+          <span>{dayjs(user.Messages?.at(-1)?.createdAt).fromNow(true)}</span>
         </div>
-        <div className={styles.roomLastChat}>
-          {user.Messages?.at(-1)?.content}
-        </div>
+        <div>{user.Messages?.at(-1)?.content}</div>
       </div>
     </div>
   );
