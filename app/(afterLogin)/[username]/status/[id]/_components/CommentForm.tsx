@@ -47,7 +47,6 @@ export default function CommentForm({ id }: { id: string }) {
       );
     },
     async onSuccess() {
-      console.log(queryClient.getQueryCache().getAll());
       await Promise.all([
         queryClient.invalidateQueries({
           queryKey: ["posts", String(post?.postId)],

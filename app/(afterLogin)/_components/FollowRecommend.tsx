@@ -122,7 +122,7 @@ export default function FollowRecommend({ user }: FollowRecommendProps) {
       ]);
       if (value) {
         const index = value.findIndex((v) => v.id === userId);
-        console.log(value, userId, index);
+
         const shallow = [...value];
         shallow[index] = {
           ...shallow[index],

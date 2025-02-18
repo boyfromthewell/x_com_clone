@@ -5,6 +5,7 @@ import { getUserServer } from "../../[username]/_lib/getUserServer";
 import UserInfo from "./_components/UserInfo";
 import MessageForm from "./_components/MessageForm";
 import WebSocket from "./_components/WebSocket";
+import MessageList from "./_components/MessageList";
 
 export default async function ChatRoom({
   params,
@@ -28,6 +29,7 @@ export default async function ChatRoom({
     <main className={styles.main}>
       <WebSocket />
       <UserInfo id={ids[0]} />
+      <MessageList id={ids[0]} />
       <MessageForm id={ids[0]} />
     </main>
   );
