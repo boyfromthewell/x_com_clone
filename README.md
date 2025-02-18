@@ -2,6 +2,14 @@
 
 x.com (구 twitter) clone 프로젝트 입니다.
 
+```
+cd backend
+npm i
+npm run start:dev
+
+npm run start
+```
+
 ## framework & library
 
 - Next.js (ver 15)
